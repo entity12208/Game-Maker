@@ -1,9 +1,13 @@
-name: Release 
+name: Create Release
 
 on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '.github/**'
+    types:
+      - pushed
 
 jobs:
   release:
@@ -14,20 +18,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
         with:
-          node-version: '14'
+          dotnet-version: '6.0.x' # Adjust this to your .NET version
 
       - name: Build project
-        run: |
-          # Add your build commands here
-          # Example: npm install && npm run build
-          echo "Building project..."
-          # Simulate creating an .exe file
-          echo "This is a dummy executable file" > main.exe
+        run: dotnet publish -c Release -r win-x64 --self-contained
 
-      - name: Create Release
+      - name: Create release
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -35,16 +34,15 @@ jobs:
         with:
           tag_name: ${{ github.sha }}
           release_name: Release ${{ github.sha }}
-          body: "Automated release for commit ${{ github.sha }}"
           draft: false
           prerelease: false
 
-      - name: Upload Release Asset
+      - name: Upload .exe file
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./main.exe
-          asset_name: main.exe
+          asset_path: ./bin/Release/net6.0/win-x64/publish/Game-Maker.exe # Adjust this to your .exe file path
+          asset_name: Game-Maker.exe # Adjust this to your .exe file name
           asset_content_type: application/octet-stream
