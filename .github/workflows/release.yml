@@ -2,7 +2,7 @@ name: Create Release
 
 on:
   push:
-    branches:
+    branches: 
       - main
     paths-ignore:
       - '.github/**'
