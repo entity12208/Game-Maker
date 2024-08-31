@@ -1,0 +1,28 @@
+{
+  "name": "game-maker",
+  "version": "1.0.0",
+  "description": "Game Maker is a coding platform for programmers of all skill levels!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "pkg . --out-path dist --targets node14-win-x64"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/entity12208/game-maker.git"
+  },
+  "keywords": [
+    "game",
+    "maker",
+    "coding",
+    "platform"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    // Add your project dependencies here
+  },
+  "devDependencies": {
+    "pkg": "^5.3.3"
+  }
+}
