@@ -1,45 +1,64 @@
-name: Create Release
+name: Release Game Maker
 
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - '.github/**'
+  workflow_dispatch:
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          dotnet-version: '6.0.x' # Adjust this to your .NET version
+          node-version: '14'
 
-      - name: Build project
-        run: dotnet publish -c Release -r win-x64 --self-contained
+      - name: Install dependencies
+        run: npm install
 
-      - name: Create release
+      - name: Install pkg
+        run: npm install -g pkg
+
+      - name: Build executable
+        run: pkg . --out-path dist --targets node14-win-x64
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: game-maker-exe
+          path: dist/game-maker.exe
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: game-maker-exe
+          path: dist
+
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}
-          release_name: Release ${{ github.sha }}
+          tag_name: v1.0.${{ github.run_number }}
+          release_name: Release v1.0.${{ github.run_number }}
           draft: false
           prerelease: false
 
-      - name: Upload .exe file
+      - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./bin/Release/net6.0/win-x64/publish/Game-Maker.exe # Adjust this to your .exe file path
-          asset_name: Game-Maker.exe # Adjust this to your .exe file name
+          asset_path: dist/game-maker.exe
+          asset_name: game-maker.exe
           asset_content_type: application/octet-stream
