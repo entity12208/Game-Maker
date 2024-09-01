@@ -1,64 +1,49 @@
-name: Release Game Maker
+name: Build and Release
 
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: npm install
 
-      - name: Install pkg
-        run: npm install -g pkg
+    - name: Build project
+      run: node index.js
 
-      - name: Build executable
-        run: pkg . --out-path dist --targets node14-win-x64
+    - name: Package project
+      run: npx pkg . --out-path dist --targets node14-win-x64
 
-      - name: Archive build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: game-maker-exe
-          path: dist/game-maker.exe
+    - name: Upload release assets
+      uses: actions/upload-artifact@v3
+      with:
+        name: game-maker-exe
+        path: dist/*.exe
 
   release:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: game-maker-exe
-          path: dist
+    - name: Download build artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: game-maker-exe
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v1.0.${{ github.run_number }}
-          release_name: Release v1.0.${{ github.run_number }}
-          draft: false
-          prerelease: false
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/game-maker.exe
-          asset_name: game-maker.exe
-          asset_content_type: application/octet-stream
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist/*.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
