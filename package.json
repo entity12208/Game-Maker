@@ -21,7 +21,7 @@
   "author": "Entity12208",
   "license": "MIT",
   "dependencies": {
-    // Add your project dependencies here
+
   },
   "devDependencies": {
     "pkg": "^5.8.1"
