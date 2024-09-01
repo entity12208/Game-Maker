@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Game Maker is a coding platform for programmers of all skill levels!",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "start": "node index.js",
     "build": "pkg . --out-path dist --targets node14-win-x64"
@@ -20,9 +21,9 @@
   "author": "Entity12208",
   "license": "MIT",
   "dependencies": {
-  
+    // Add your project dependencies here
   },
   "devDependencies": {
-    "pkg": "^5.3.3"
+    "pkg": "^5.8.1"
   }
 }
