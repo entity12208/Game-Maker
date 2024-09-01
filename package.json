@@ -18,11 +18,9 @@
     "coding",
     "platform"
   ],
-  "author": "Entity12208",
+  "author": "Your Name",
   "license": "MIT",
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {
     "pkg": "^5.8.1"
   }
