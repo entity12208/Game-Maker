@@ -12,7 +12,7 @@ function main() {
         fs.mkdirSync(distDir);
     }
 
-    if (!fs.exists(appFile)) {
+    if (!fs.existsSync(appFile)) {
         console.error('Error: App.js not found');
         process.exit(1);
     }
