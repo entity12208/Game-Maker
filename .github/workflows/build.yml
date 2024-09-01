@@ -2,6 +2,10 @@ name: Build and Release
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+        required: true
 
 jobs:
   build:
@@ -42,8 +46,22 @@ jobs:
         name: game-maker-exe
 
     - name: Create GitHub Release
+      id: create_release
       uses: softprops/action-gh-release@v1
       with:
+        tag_name: ${{ github.event.inputs.version }}
+        release_name: Release ${{ github.event.inputs.version }}
         files: dist/*.exe
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Add release tag
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git tag -a bot-uploaded -m "Bot uploaded release"
+        git push origin bot-uploaded
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
