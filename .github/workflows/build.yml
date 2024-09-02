@@ -26,9 +26,6 @@ jobs:
     - name: Build project
       run: node index.js
 
-    - name: Package project
-      run: npx pkg . --out-path dist --targets node14-win-x64
-
     - name: Upload release assets
       uses: actions/upload-artifact@v3
       with:
