@@ -1,4 +1,4 @@
-from pyLib.h import *
+import pyLib.py
 import time
 
 global time = 0
