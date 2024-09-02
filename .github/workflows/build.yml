@@ -40,6 +40,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
     - name: Download build artifact
       uses: actions/download-artifact@v3
       with:
@@ -50,18 +53,16 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ github.event.inputs.version }}
-        release_name: Release ${{ github.event.inputs.version }}
+        name: Release ${{ github.event.inputs.version }}
         files: dist/*.exe
-        draft: false
-        prerelease: false
       env:
-        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Add release tag
       run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
+        git config --global user.name github-actions
+        git config --global user.email github-actions@github.com
         git tag -a bot-uploaded -m "Bot uploaded release"
         git push origin bot-uploaded
       env:
-        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
