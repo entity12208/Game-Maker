@@ -9,7 +9,7 @@ function copyFolderSync(from, to) {
     fs.readdirSync(from, { withFileTypes: true }).forEach((entry) => {
         const fromPath = path.join(from, entry.name);
         const toPath = path.join(to, entry.name);
-        if (entry.isDirectory() && entry.name !== 'dist') {
+        if (entry.isDirectory() && entry.name !== 'dist' && entry.name !== '.github') {
             copyFolderSync(fromPath, toPath);
         } else if (!entry.isDirectory()) {
             fs.copyFileSync(fromPath, toPath);
