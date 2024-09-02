@@ -29,7 +29,7 @@ jobs:
     - name: Build project
       run: node index.js
 
-    - name: Upload release assets
+    - name: Upload build artifact
       uses: actions/upload-artifact@v3
       with:
         name: game-maker-exe
