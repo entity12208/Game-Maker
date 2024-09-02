@@ -62,7 +62,7 @@ jobs:
       run: |
         git config --global user.name github-actions
         git config --global user.email github-actions@github.com
-        git tag -a bot-uploaded -m "Bot uploaded release"
-        git push origin bot-uploaded
+        git tag -f bot-uploaded
+        git push -f origin bot-uploaded
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
