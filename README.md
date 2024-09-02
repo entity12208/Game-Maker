@@ -1,5 +1,6 @@
 # Game Maker (Python, C, Javascript)
-Welcome to Game Maker! Game Maker is a program that allows you to build games using Python, Javascript, or C (or the variant C++). Each of these languages has different features. Please take a look below.
+![Game Maker](https://github.com/user-attachments/assets/eca2496d-0c32-4c11-baf4-be82514cbf6c)
+Welcome to Game Maker, a program that allows you to build games using Python, Javascript, or C (or the variant C++)! Each of these languages has different features. For more information about these features, please see Language Features below.
 
 ## Language Features
  
