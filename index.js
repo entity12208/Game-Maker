@@ -2,22 +2,34 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
+
+function copyFolderSync(from, to) {
+    fs.mkdirSync(to, { recursive: true });
+    fs.readdirSync(from, { withFileTypes: true }).forEach((entry) => {
+        const fromPath = path.join(from, entry.name);
+        const toPath = path.join(to, entry.name);
+        if (entry.isDirectory()) {
+            copyFolderSync(fromPath, toPath);
+        } else {
+            fs.copyFileSync(fromPath, toPath);
+        }
+    });
+}
 
 function main() {
     const projectRoot = path.resolve(__dirname);
     const distDir = path.join(projectRoot, 'dist');
-    const appFile = path.join(projectRoot, 'Code Files', 'Project Files', 'App.js');
 
-    if (!fs.existsSync(distDir)) {
-        fs.mkdirSync(distDir);
+    if (fs.existsSync(distDir)) {
+        fs.rmdirSync(distDir, { recursive: true });
     }
 
-    if (!fs.existsSync(appFile)) {
-        console.error('Error: App.js not found');
-        process.exit(1);
-    }
+    copyFolderSync(projectRoot, distDir);
 
-    fs.copyFileSync(appFile, path.join(distDir, 'App.js'));
+    console.log('Project copied to dist directory.');
+
+    execSync(`pkg ${distDir} --out-path dist --targets node14-win-x64`);
     console.log('Build completed successfully.');
 }
 
