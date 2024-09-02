@@ -9,9 +9,9 @@ function copyFolderSync(from, to) {
     fs.readdirSync(from, { withFileTypes: true }).forEach((entry) => {
         const fromPath = path.join(from, entry.name);
         const toPath = path.join(to, entry.name);
-        if (entry.isDirectory()) {
+        if (entry.isDirectory() && entry.name !== 'dist') {
             copyFolderSync(fromPath, toPath);
-        } else {
+        } else if (!entry.isDirectory()) {
             fs.copyFileSync(fromPath, toPath);
         }
     });
