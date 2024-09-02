@@ -1,6 +1,17 @@
 from pyLib.h import *
+import time
+
+global time = 0
+
+def clock(interval):
+  time += int(interval)
+  return time
+  
+  
 def init():
   print('initializing scripts...')
   pydat = ''
   asset-py = saved-asset-py
-  return pydat or ''
+  
+def echo(txt):
+  print(str(txt) + ' - ' + time)
