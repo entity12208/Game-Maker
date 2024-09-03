@@ -3,11 +3,6 @@ import time
 
 global time = 0
 
-def clock(interval):
-  time += int(interval)
-  return time
-  
-  
 def init():
   print('initializing scripts...')
   pydat = ''
@@ -15,3 +10,26 @@ def init():
   
 def echo(txt):
   print(str(txt) + ' - ' + time)
+
+def clock(interval):
+  time += int(interval)
+  echo(str(interval))
+  return time
+  
+def checkimport(name):
+  if (import str(name)):
+    return NONE
+  
+def pylib(name, action):
+  
+  if action == 'import':
+    import str(name)
+    
+  elif action == 'get':
+    echo('gathering files...')
+    I = checkimport(name)
+    echo(I)
+  elif action == 'reserve':
+    echo('reserved file')
+  else:
+    echo()
