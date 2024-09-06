@@ -33,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v4.4.0
       with:
         name: game-maker-exe
-        path: Game-Maker/
+        path: Code Files/
 
   release:
     needs: build
