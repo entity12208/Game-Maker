@@ -54,7 +54,7 @@ jobs:
       with:
         tag_name: ${{ github.event.inputs.version }}
         name: Release ${{ github.event.inputs.version }}
-        files: dist/*.exe
+        files: Code Files/*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
