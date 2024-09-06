@@ -41,7 +41,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4.1.7
 
     - name: Download build artifact
       uses: actions/download-artifact@v4.1.8
@@ -50,7 +50,7 @@ jobs:
 
     - name: Create GitHub Release
       id: create_release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2.0.8
       with:
         tag_name: ${{ github.event.inputs.version }}
         name: Release ${{ github.event.inputs.version }}
