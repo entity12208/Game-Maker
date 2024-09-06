@@ -1,18 +1,15 @@
 # Security Policy
 
+To maintain a secure environment, we have implemented a comprehensive security policy.
+
 ## Supported Versions
+Currently, the only versions not supported are those below 1.1.0. All other versions, including 1.1.0 and above, are fully supported.
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
-| Version | Supported          |
+| Version | Supported |
 | ------- | ------------------ |
-| > 1.0.1   | :white_check_mark: |
-|   1.0.0   | :white_check_mark: |
-| < 1.0.0   | :x:                |
+| > 1.1.0 | :white_check_mark: |
+| 1.1.0 | :white_check_mark: |
+| < 1.0.0 | :x: |
 
 ## Reporting a Vulnerability
-
-Report a vulnerability in Issues. Expect an update every other week. 
-If your vulnerability is accepted, you will receive a comment or an email. 
-If it is declined, the issue will be closed.
+If you find a potential vulnerability within our system, we encourage you to report it immediately. To report a vulnerability, please create an issue in our system. Our team is dedicated to reviewing and addressing reported vulnerabilities promptly.
